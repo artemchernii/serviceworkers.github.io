@@ -1,5 +1,6 @@
 const cacheName = 'v1';
 const cacheAssets = [
+  '/serviceworkers.github.io/',
   '/serviceworkers.github.io/index.html',
   '/serviceworkers.github.io/about.html',
   '/serviceworkers.github.io/css/style.css',
@@ -13,7 +14,7 @@ self.addEventListener('install', (event) => {
     caches
       .open(cacheName)
       .then((cache) => {
-        console.log('Caching files');
+        console.log('Caching files', cacheName);
         cache.addAll(cacheAssets);
       })
       .then(() => self.skipWaiting())
@@ -25,6 +26,7 @@ self.addEventListener('activate', (event) => {
   // Remove unwanted caches
   event.waitUntil(
     caches.keys().then((cacheNames) => {
+      console.log('cacheNames:(activate)', cacheNames);
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== cacheName) {
@@ -41,6 +43,10 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   console.log('Fetch event for ', event.request.url);
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    // fetch(event.request).catch(() => caches.match(event.request))
+    caches.match(event.request).then((reg) => {
+      console.log('reg', reg);
+      return reg || fetch(event.request);
+    })
   );
 });
