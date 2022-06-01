@@ -1,11 +1,11 @@
 const cacheName = 'v1';
 const cacheAssets = [
-  'index.html',
-  'about.html',
-  '/css/style.css',
-  '/js/main.js',
+  '/serviceworkers.github.io/index.html',
+  '/serviceworkers.github.io/about.html',
+  '/serviceworkers.github.io/css/style.css',
+  '/serviceworkers.github.io/js/main.js',
 ];
-
+console.log('assets', cacheAssets);
 // Call Install Event
 self.addEventListener('install', (event) => {
   console.log('Service worker installed');
