@@ -2,7 +2,9 @@
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('../sw_cached_site.js')
+      .register('/serviceworkers.github.io/sw_cached_pages.js', {
+        scope: '/serviceworkers.github.io/',
+      })
       .then((reg) => {
         console.log('Service worker registered', reg);
       })
